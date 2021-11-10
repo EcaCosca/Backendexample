@@ -1,0 +1,11 @@
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const port = 8000;
+const homeworks = require("./routers/homeworks");
+const blogs = require("./routers/blog");
+app.use(cors({ origin: "http://localhost:3000" }));
+app.use(express.json());
+app.use("/homeworks", homeworks);
+app.use("/blogs", blogs);
+app.listen(port);

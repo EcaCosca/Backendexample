@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = 8000;
+const PORT = 3001;
 const homework = require("./routes/homeworks");
 
 app.use("/homework", homework);

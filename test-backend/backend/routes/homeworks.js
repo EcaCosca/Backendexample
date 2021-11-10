@@ -1,31 +1,38 @@
 const express = require("express");
 const homeworks = require("./homework.json");
-// const cors = require("cors");
-// app.use(cors());
+const cors = require("cors");
 let router = express.Router();
 router.use(express.json());
+
+router.use(cors());
 
 router.get("/getHomework", (req, res) => {
   res.send(homeworks);
 });
 
 router.post("/post", (req, res) => {
-  //   req.body;
+  req.body.data;
   const homework = {
     id: homeworks.length + 1,
-    title: req.body.title,
-    link: req.body.link,
-    description: req.body.description,
+    title: req.body.data.title,
+    link: req.body.data.link,
+    description: req.body.data.description,
   };
   homeworks.push(homework);
   res.send(homeworks);
 });
 
 router.delete("/delete/:id", (req, res) => {
-  id = req.params;
-  let deletedHomework = homeworks.splice(id, 1);
-
-  res.send(deletedHomework);
+  let found = homeworks.find(function (item) {
+    return item.id === parseInt(req.params.id);
+  });
+  if (found) {
+    let targetIndex = homeworks.indexOf(found);
+    homeworks.splice(targetIndex, 1);
+    res.send(homeworks);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 router.put("/put/:id", (req, res) => {

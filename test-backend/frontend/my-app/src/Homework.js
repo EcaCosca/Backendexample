@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 function Homework() {
   const [homework, setHomework] = useState([]);
   const [ifOn, setIfOn] = useState(false);
+  const [saveId, setSaveID] = useState();
   useEffect(() => {
     axios.get("http://localhost:3001/homework/getHomework").then((res) => {
       console.log(res.data);
@@ -28,13 +29,19 @@ function Homework() {
       });
   }
 
-  function updateItem(e, id, title, link, description) {
+  function updateItem(e, id) {
     e.preventDefault();
     setIfOn(true);
-    console.log("test button update" + id);
+    setSaveID(id);
+  }
 
+  function putData(e) {
+    e.preventDefault();
+    let title = e.target[0].value;
+    let link = e.target[1].value;
+    let description = e.target[2].value;
     axios
-      .put(`http://localhost:3001/homework/put/${id}`, {
+      .put(`http://localhost:3001/homework/put/${saveId}`, {
         data: { title: title, link: link, description: description },
       })
 
@@ -43,7 +50,7 @@ function Homework() {
         setHomework(res.data);
       });
   }
-
+  // .
   function deleteItem(e, id) {
     e.preventDefault();
     console.log("test button" + id);
@@ -69,6 +76,26 @@ function Homework() {
         <br></br>
         <button type="submit"> Add Homework </button>
       </form>
+
+      {(function form() {
+        if (ifOn == true) {
+          return (
+            <form
+              onSubmit={(e) => {
+                putData(e);
+              }}
+            >
+              <input placeholder="title"></input>
+              <br></br>
+              <input placeholder="link"></input>
+              <br></br>
+              <input placeholder="description"></input>
+              <br></br>
+              <button type="submit"> Save </button>
+            </form>
+          );
+        }
+      })()}
       {homework.map((item) => {
         return (
           <div>

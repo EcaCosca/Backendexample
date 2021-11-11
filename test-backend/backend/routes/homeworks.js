@@ -42,9 +42,9 @@ router.put("/put/:id", (req, res) => {
   if (found) {
     let update = {
       id: found.id,
-      title: req.body.title,
-      link: req.body.link,
-      description: req.body.description,
+      title: req.body.data.title,
+      link: req.body.data.link,
+      description: req.body.data.description,
     };
     let targetIndex = homeworks.indexOf(found);
     homeworks.splice(targetIndex, 1, update);
@@ -55,3 +55,5 @@ router.put("/put/:id", (req, res) => {
 });
 
 module.exports = router;
+
+// ,

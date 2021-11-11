@@ -7,6 +7,7 @@ router.get("/", (req, res) => {
   fs.readFile("blog.json", "utf8", (err, data) => {
     res.send(data);
   });
+  console.log("GET from blog");
 });
 
 router.post("/", (req, res) => {
@@ -31,7 +32,7 @@ router.put("/:id", (req, res) => {
   const id = parseInt(req.params.id);  
   fs.readFile("blog.json", "utf8", (err, data) => {
     let arr = JSON.parse(data);
-    
+
     if(arr.findIndex((e) => e.id === id) === -1) res.json("id not found")
     let index = arr.findIndex((e) => e.id === id);
     arr[index] = {

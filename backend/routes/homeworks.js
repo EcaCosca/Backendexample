@@ -22,9 +22,9 @@ router.post('/' , (req,res) => {
         newData = {
             id: arr.length+1,
             title: req.body.title,
-            link: req.body.link,
-            description: req.body.description,
-            technologies: req.body.technologies
+            link: req.body.link || "",
+            description: req.body.description || "",
+            technologies: req.body.technologies || ""
         }
         arr.push(newData)
         fs.writeFile('hw.json', JSON.stringify(arr), (err)=>{

@@ -28,45 +28,21 @@ function Homework() {
       });
   }
 
-  //   function updateItem(e, id) {
-  //     e.preventDefault();
-  //     setIfOn(true);
+  function updateItem(e, id, title, link, description) {
+    e.preventDefault();
+    setIfOn(true);
+    console.log("test button update" + id);
 
-  //     if (ifOn == true) {
-  //       return (
-  //         <div>
-  //           <form
-  //           onSubmit={(e) => {
-  //             add(e);
-  //           }}
-  //           >
-  //             <input placeholder="title"></input>
-  //             <br></br>
-  //             <input placeholder="link"></input>
-  //             <br></br>
-  //             <input placeholder="description"></input>
-  //             <br></br>
-  //             <button type="submit"> Add Homework </button>
-  //           </form>
-  //         </div>
-  //       );
-  //     }
-  //     console.log(e.target[0].value);
-  //     let title = e.target[0].value;
-  //     let link = e.target[1].value;
-  //     let description = e.target[2].value;
-  //     console.log("test button update" + id);
+    axios
+      .put(`http://localhost:3001/homework/put/${id}`, {
+        data: { title: title, link: link, description: description },
+      })
 
-  //     axios
-  //       .put(`http://localhost:3001/homework/put/${id}`, {
-  //         data: { title: title, link: link, description: description },
-  //       })
-
-  //       .then((res) => {
-  //         console.log(res.data);
-  //         setHomework(res.data);
-  //       });
-  //   }
+      .then((res) => {
+        console.log(res.data);
+        setHomework(res.data);
+      });
+  }
 
   function deleteItem(e, id) {
     e.preventDefault();
@@ -93,7 +69,6 @@ function Homework() {
         <br></br>
         <button type="submit"> Add Homework </button>
       </form>
-
       {homework.map((item) => {
         return (
           <div>
@@ -108,7 +83,13 @@ function Homework() {
             >
               Delete
             </button>
-
+            <button
+              onClick={(e) => {
+                updateItem(e, item.id, item.title, item.link, item.description);
+              }}
+            >
+              Update
+            </button>
             <hr></hr>
           </div>
         );
@@ -118,11 +99,3 @@ function Homework() {
 }
 
 export default Homework;
-
-// <button
-// onClick={(e) => {
-//   updateItem(e, item.id);
-// }}
-// >
-// Update
-// </button>
